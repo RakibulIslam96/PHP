@@ -35,6 +35,9 @@
 
    echo $_SERVER['HTTP_USER_AGENT'];
    echo'<br>';
+
+   echo $_SERVER['SERVER_SIGNATURE'];
+   echo '<br>';
    ?>
    
    
