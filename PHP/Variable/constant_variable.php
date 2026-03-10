@@ -21,7 +21,7 @@ echo "Welcome to " . SITE;
 <?php
 define("COUNTRY","Square Kilometers");
 echo "<br>";
-echo "1,47,570" +" ". COUNTRY;
+echo "1,47,570". COUNTRY;
 ?>
 </body>
 

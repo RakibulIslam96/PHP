@@ -13,7 +13,8 @@ echo $_REQUEST ['uname'];
 <form action="#" method="post">
     User Name: <br>
     <input type="text" name="uname"> <br> <br>
-    <input type="submit" value="Submit">
+    <input type="submit" value="Submit"> <br> <br>
+    
 </form>
 </body>
 </html>
