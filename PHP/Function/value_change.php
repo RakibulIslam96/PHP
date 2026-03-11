@@ -11,4 +11,6 @@
 
     echo floatval($num);
     echo "<br>";
+
+    echo round($num,2);
 ?>
