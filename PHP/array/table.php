@@ -1,7 +1,7 @@
 <?php
 $arr = [
     [2,4,5,6,7],
-    ["a", "b", "c", "d", "r"],
+    ["a", "b", "c", "d"],
     [78,59,49,20, 50],
 ];
 for ($i=0; $i<3; $i++){
@@ -14,16 +14,4 @@ for ($i=0; $i<3; $i++){
     echo "</ul>";
 }
 
-?>
-
-<?php
-echo "<br>";
-echo "<br>";
-for ($i=0; $i<3; $i++)   // Outer Loop
-{
-    for($j=0; $j<4; $j++)  // Inner Loop
-    {
-        echo $arr[$i][$j];
-    }
-}
 ?>
