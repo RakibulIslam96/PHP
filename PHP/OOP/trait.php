@@ -15,7 +15,7 @@ trait Hello1
     {
         echo "Pagle." . "<br>";
         echo "bhai." . "<br>";
-        echo "fahim .";
+        echo "fahim ." ."<br>";
     }
 }
 class Rakib
