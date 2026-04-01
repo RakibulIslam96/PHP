@@ -1,0 +1,10 @@
+ Data Types 
+PHP তে প্রধানত ৮ ধরনের data type আছে 
+String 
+Integer 
+Float 
+Boolean 
+Array 
+Object 
+NULL 
+Resource 
