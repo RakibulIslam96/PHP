@@ -1,6 +1,0 @@
-{
-    "editor.suggest.selectionMode": "never",
-    "editor.formatOnSave": true,
-    "files.autoSave": "afterDelay",
-    "editor.wordWrap": "on"
-}
