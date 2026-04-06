@@ -39,11 +39,11 @@
         $name = $_POST['name'];
         $city = $_POST['city'];
 
-        $data = $id . "," . $name . "," . $city . "\n";
+        $data = $id . "," . $name . "," . $city . PHP_EOL;
 
         file_put_contents("data.txt", $data, FILE_APPEND);
 
-        echo "Data Saved Successfully";
+        echo "Data Saved Successfully ";
 
         }
     $files = file("data.txt");
