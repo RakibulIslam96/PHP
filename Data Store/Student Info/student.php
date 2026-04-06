@@ -1,5 +1,5 @@
 <?php
-class Car
+class Student
 {
     public $id;
     private $name;

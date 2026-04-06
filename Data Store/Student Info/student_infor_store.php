@@ -1,5 +1,5 @@
 <?php
-require_once('car.php');
+require_once('student.php');
 
 if (isset($_POST['btnsubmit'])) {
 
@@ -7,7 +7,7 @@ if (isset($_POST['btnsubmit'])) {
     $uname = $_POST['fname'];
     $uemail = $_POST['femail'];
 
-    $c = new Car($uid, $uname, $uemail);
+    $c = new Student($uid, $uname, $uemail);
     $c->store();
 
     echo "Successfully Stored <br><br>";
@@ -50,7 +50,7 @@ if (isset($_POST['btnsubmit'])) {
 
 
 <?php
-Car::display();
+Student::display();
 ?>
 
 </div>
