@@ -1,38 +1,59 @@
 <?php
 require_once('car.php');
+
 if (isset($_POST['btnsubmit'])) {
 
     $uid = $_POST['fid'];
     $uname = $_POST['fname'];
-    $c = new Car($uid, $uname);
+    $uemail = $_POST['femail'];
+
+    $c = new Car($uid, $uname, $uemail);
     $c->store();
-    echo "successfully";
+
+    echo "Successfully Stored <br><br>";
 }
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
-
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+<title>Student Info</title>
 </head>
 
 <body>
-    <div>
+ 
+    <div style ="
+        width:320px;
+        border-radius:10px;
+        box-shadow:0 0 10px gray;
+        padding: 10px 30px ;
+        margin:50px auto;
+        font-family:cursive;
+        ">
+
         <form action="#" method="post">
-            Id: <br>
-            <input type="number" name="fid" required><br> <br>
-            Name: <br>
-            <input type="text" name="fname" required><br><br>
-            <input type="submit" name="btnsubmit">
+        <h1 style = "text-align: center;"> Student Information </h1>
+        Id: <br>
+        <input type="number" name="fid" required><br><br>
+
+        Name: <br>
+        <input type="text" name="fname" required><br><br>
+
+        Email: <br>
+        <input type="email" name="femail" required><br><br>
+
+        <input type="submit" name="btnsubmit">
 
         </form>
-    <?php
-    Car::display();
-    ?>
-    </div>
-</body>
 
+        <hr>
+
+
+<?php
+Car::display();
+?>
+
+</div>
+
+</body>
 </html>
