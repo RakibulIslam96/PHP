@@ -1,6 +1,5 @@
 <?php
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // $_FILES['photo'] এর ভেতর সব তথ্য অ্যারে আকারে থাকে
     echo "<pre>";
     print_r($_FILES['photo']);
     echo "</pre>";
