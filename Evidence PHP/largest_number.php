@@ -7,17 +7,7 @@
 </head>
 <body>
     
-    <div style="
-        width:320px;
-        height: 320px;
-        border-radius: 10px;
-        box-shadow: 0 0 10px gray;
-        padding: 40px;
-        margin: auto;
-        font-family: cursive;
-        items-align: center;
-        text-align: center;
-        ">
+    <div >
         <form method="post">
         <h3> Find out the largest Number </h3>
         Enter First Number :

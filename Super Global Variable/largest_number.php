@@ -1,7 +1,7 @@
 <form method="post">  
-    First Number: <input type = "number" name="num1"> &nbsp; &nbsp;
-    Second Number: <input type = "number" name="num2">&nbsp; &nbsp;
-    Third Number: <input type = "number" name="num3">&nbsp; &nbsp;
+    First Number: <input type = "number" name="num1"> 
+    Second Number: <input type = "number" name="num2">
+    Third Number: <input type = "number" name="num3"> <br>
     <input type="submit" name="submit">
 </form>
 <?php
