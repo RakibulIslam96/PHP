@@ -1,25 +1,48 @@
 <?php
 session_start();
-include "db.php";
 
 if(isset($_POST['login'])){
+
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $result = $conn->query("SELECT * FROM users WHERE username='$username'");
-    $user = $result->fetch_assoc();
+    $data = file("info.txt");
 
-    if($user && password_verify($password, $user['password'])){
-        $_SESSION['user'] = $user['username'];
-        header("Location: dashboard.php");
-    } else {
-        echo "Invalid Login!";
+    foreach($data as $line){
+
+        $user = explode(",", $line);
+
+        if($user[0] == $username && trim($user[1]) == $password){
+
+            $_SESSION['user'] = $username;
+
+            header("Location: upload.php");
+            exit();
+
+        }
+
     }
+
+    echo "Invalid Username or Password";
+
 }
 ?>
 
+<h2>Login</h2>
+
 <form method="post">
-    <input type="text" name="username"><br>
-    <input type="password" name="password"><br>
-    <button name="login">Login</button>
+
+Username <br>
+<input type="text" name="username">
+<br><br>
+
+Password <br>
+<input type="password" name="password">
+<br><br>
+
+<button name="login">Login</button>
+
 </form>
+
+<br>
+<a href="registration.php">Register</a>
