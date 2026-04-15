@@ -14,7 +14,7 @@ if(isset($_POST['upload'])){
 
     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
-    if(($ext == "jpg" || $ext == "png") && $size <= 4*1024*1024){
+    if(($ext == "jpg" || $ext == "png") && $size <= 3*1024*1024){
 
         move_uploaded_file($temp,"uploads/".$file);
 
