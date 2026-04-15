@@ -6,6 +6,7 @@ if(!isset($_SESSION['user'])){
     exit();
 }
 
+/* ---------------- UPLOAD ---------------- */
 if(isset($_POST['upload'])){
 
     $file = $_FILES['file']['name'];
@@ -16,13 +17,26 @@ if(isset($_POST['upload'])){
 
     if(($ext == "jpg" || $ext == "png") && $size <= 3*1024*1024){
 
-        move_uploaded_file($temp,"uploads/".$file);
+        // unique file name
+        $newName = time() . "_" . rand(1000,9999) . "." . $ext;
+
+        move_uploaded_file($temp,"uploads/".$newName);
 
         $msg = "File Uploaded Successfully";
 
     }else{
+        $error = "Only JPG/PNG allowed and Max 3MB";
+    }
+}
 
-        $error = "Only JPG/PNG allowed and Max Size 3MB";
+/* ---------------- DELETE ---------------- */
+if(isset($_GET['delete'])){
+
+    $delFile = "uploads/" . $_GET['delete'];
+
+    if(file_exists($delFile)){
+        unlink($delFile);
+        $msg = "File Deleted Successfully";
     }
 }
 ?>
@@ -52,7 +66,6 @@ body{
     border-radius:10px;
     text-align:center;
     margin-bottom:20px;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
 }
 
 .upload-box{
@@ -60,16 +73,11 @@ body{
     padding:20px;
     border-radius:10px;
     text-align:center;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
     margin-bottom:20px;
 }
 
-input[type="file"]{
-    padding:10px;
-}
-
 button{
-    padding:10px 20px;
+    padding:10px 15px;
     background:#0984e3;
     color:white;
     border:none;
@@ -77,19 +85,6 @@ button{
     cursor:pointer;
 }
 
-button:hover{
-    background:#0652DD;
-}
-
-.msg{
-    color:green;
-}
-
-.error{
-    color:red;
-}
-
-/* Gallery Style */
 .gallery{
     display:grid;
     grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));
@@ -101,7 +96,6 @@ button:hover{
     padding:10px;
     border-radius:10px;
     text-align:center;
-    box-shadow:0 0 10px rgba(0,0,0,0.1);
     transition:0.3s;
 }
 
@@ -116,16 +110,18 @@ button:hover{
     border-radius:8px;
 }
 
-.filename{
+.del{
+    display:inline-block;
     margin-top:8px;
-    font-size:14px;
-    word-break:break-all;
+    color:white;
+    background:red;
+    padding:5px 10px;
+    border-radius:5px;
+    text-decoration:none;
 }
 
-a{
-    text-decoration:none;
-    color:red;
-}
+.msg{color:green;}
+.error{color:red;}
 
 </style>
 
@@ -135,8 +131,8 @@ a{
 <div class="container">
 
 <div class="header">
-    <h2>Welcome <?php echo $_SESSION['user']; ?></h2>
-    <a href="logout.php">Logout</a>
+<h2>Welcome <?php echo $_SESSION['user']; ?></h2>
+<a href="logout.php">Logout</a>
 </div>
 
 <div class="upload-box">
@@ -159,7 +155,7 @@ if(isset($error)) echo "<p class='error'>$error</p>";
 
 </div>
 
-<h2 style="color:white; text-align:center;">📸 Image Gallery</h2>
+<h2 style="color:white;text-align:center;">📸 Gallery</h2>
 
 <div class="gallery">
 
@@ -179,7 +175,8 @@ foreach($files as $file){
 
         echo "<div class='card'>";
         echo "<img src='uploads/$file'>";
-        echo "<div class='filename'>$file</div>";
+        echo "<br>";
+        echo "<a class='del' href='?delete=$file'>Delete</a>";
         echo "</div>";
 
     }
