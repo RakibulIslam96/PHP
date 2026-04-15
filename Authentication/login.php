@@ -12,15 +12,17 @@ if(isset($_POST['login'])){
 
         $user = explode(",", $line);
 
-        if($user[0] == $username && trim($user[1]) == $password){
+        $fileUser = $user[0];
+        $filePass = trim($user[1]);
+
+        // 🔐 verify password
+        if($fileUser == $username && password_verify($password, $filePass)){
 
             $_SESSION['user'] = $username;
 
             header("Location: upload.php");
             exit();
-
         }
-
     }
 
     $error = "Invalid Username or Password";
@@ -33,7 +35,6 @@ if(isset($_POST['login'])){
 <title>Login</title>
 
 <style>
-
 body{
     font-family: Arial;
     background: linear-gradient(135deg,#74b9ff,#a29bfe);
@@ -43,7 +44,7 @@ body{
     align-items:center;
 }
 
-.login-box{
+.box{
     background:white;
     padding:40px;
     width:300px;
@@ -52,16 +53,10 @@ body{
     text-align:center;
 }
 
-.login-box h2{
-    margin-bottom:20px;
-}
-
 input{
     width:100%;
     padding:10px;
     margin-top:5px;
-    border:1px solid #ccc;
-    border-radius:5px;
 }
 
 button{
@@ -70,49 +65,27 @@ button{
     background:#0984e3;
     color:white;
     border:none;
-    border-radius:5px;
-    font-size:16px;
     cursor:pointer;
-}
-
-button:hover{
-    background:#0652DD;
-}
-
-a{
-    text-decoration:none;
-    color:#0984e3;
 }
 
 .error{
     color:red;
-    margin-bottom:10px;
 }
-
 </style>
-
 </head>
+
 <body>
 
-<div class="login-box">
+<div class="box">
 
 <h2>Login</h2>
 
-<?php
-if(isset($error)){
-    echo "<div class='error'>$error</div>";
-}
-?>
+<?php if(isset($error)) echo "<p class='error'>$error</p>"; ?>
 
 <form method="post">
 
-Username <br>
-<input type="text" name="username" required>
-<br><br>
-
-Password <br>
-<input type="password" name="password" required>
-<br><br>
+<input type="text" name="username" placeholder="Username" required><br><br>
+<input type="password" name="password" placeholder="Password" required><br><br>
 
 <button name="login">Login</button>
 

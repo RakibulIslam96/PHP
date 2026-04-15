@@ -5,15 +5,16 @@ if(isset($_POST['register'])){
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    $data = $username . "," . $password . "\n";
+    // 🔐 Encrypt password
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+    $data = $username . "," . $hashedPassword . "\n";
 
     file_put_contents("info.txt",$data,FILE_APPEND);
 
-    $msg = "Registration Successful";
     header("Location: login.php");
     exit();
 }
-
 ?>
 
 <!DOCTYPE html>

@@ -9,3 +9,6 @@ Asad,1234
 rakib,112233
 Rakib,123456
 Mahabub,42096
+Asad,$2y$10$cT91AvVgyMmjlcUJkwY/DeZYD2kltMP1aVPDWBJp0z290pPRzAApm
+Asad,$2y$10$eHESyalJaRGeXWohWD.fz.NTTyVXZD9n5mL78z5swde6SPQrwrQOe
+voira dimu,$2y$10$5TIX8XavbXHPdAcUPylLqOGwLAq3BZZMoFV40RlViQkiL3jOEICaS
