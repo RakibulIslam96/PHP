@@ -55,3 +55,20 @@ if(isset($_POST['submit'])){
 
 </body>
 </html>
+
+
+
+
+
+
+
+
+
+
+
+
+<?php
+
+$conn =msqli_connect("localhost")
+
+?>

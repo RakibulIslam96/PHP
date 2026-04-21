@@ -31,6 +31,8 @@ if (!$conn) {
         <h3> Manufacturer Information
         Name:
         <input type = "text" name= "brand"> <br> <br> 
+        Id
+        <input type = "number" name= "brand"> <br> <br> 
         
         <input type = "submit" name = "submit"> 
     </div>
