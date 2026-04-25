@@ -3,7 +3,6 @@ $host = "localhost";
 $user = "root";
 $pass = "";
 $db   = "faim";
-
 $conn =  mysqli_connect($host, $user, $pass, $db);
 
 if (!$conn) {
@@ -28,16 +27,13 @@ if(isset($_POST['submit'])){
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Form</title>
 </head>
 <body>
-
 <h2>User Form</h2>
-
 <form method="post">
     
     Name: <br>
@@ -55,17 +51,6 @@ if(isset($_POST['submit'])){
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 <?php
 
