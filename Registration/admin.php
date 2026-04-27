@@ -8,27 +8,23 @@ if(!isset($_SESSION['user'])){
 
 /* ---------------- UPLOAD ---------------- */
 if(isset($_POST['upload'])){
+
     $file = $_FILES['file']['name'];
     $temp = $_FILES['file']['tmp_name'];
     $size = $_FILES['file']['size'];
     $ext = strtolower(pathinfo($file, PATHINFO_EXTENSION));
 
     if(($ext == "jpg" || $ext == "png" || $ext == "jpeg") && $size <= 3*1024*1024){
-        $newName = time() . "_" . rand(1000,9999) . "." . $ext;
-        if(!is_dir("uploads/")) mkdir("uploads/");
-        move_uploaded_file($temp,"uploads/".$newName);
-        $msg = "File Uploaded Successfully";
-    }else{
-        $error = "Only JPG/PNG allowed and Max 3MB";
-    }
-}
 
-/* ---------------- DELETE ---------------- */
-if(isset($_GET['delete'])){
-    $delFile = "uploads/" . $_GET['delete'];
-    if(file_exists($delFile)){
-        unlink($delFile);
-        $msg = "File Deleted Successfully";
+        if(!is_dir("uploads/")) mkdir("uploads/");
+
+        // ❌ NO new name, original file name used
+        move_uploaded_file($temp,"uploads/".$file);
+
+        $msg = "File Uploaded Successfully";
+
+    } else {
+        $error = "Only JPG/PNG allowed and Max 3MB";
     }
 }
 ?>
@@ -37,124 +33,100 @@ if(isset($_GET['delete'])){
 <html>
 <head>
 <title>Upload System</title>
-<style>
-    body{ font-family: Arial; background: linear-gradient(135deg,#74b9ff,#a29bfe); margin:0; padding:0; }
-    .container{ width:80%; margin:40px auto; }
-    .header, .upload-box{ background:white; padding:20px; border-radius:10px; text-align:center; margin-bottom:20px; }
-    button{ padding:10px 15px; background:#0984e3; color:white; border:none; border-radius:5px; cursor:pointer; }
-    
-    table { width: 100%; background: white; border-collapse: collapse; border-radius: 10px; overflow: hidden; margin-top: 20px; }
-    th, td { padding: 12px; text-align: center; border-bottom: 1px solid #ddd; }
-    th { background-color: #0984e3; color: white; }
-    
-    .img-preview { width: 80px; height: 60px; object-fit: cover; border-radius: 5px; cursor: pointer; transition: 0.3s; }
-    .img-preview:hover { opacity: 0.7; }
-    .del{ color:white; background:red; padding:5px 10px; border-radius:5px; text-decoration:none; font-size: 14px; }
-    .msg{color:green;} .error{color:red;}
 
-    /* Fullscreen Modal Styling */
-    #myModal {
-        display: none; position: fixed; z-index: 999; padding-top: 50px;
-        left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.9);
-    }
-    .modal-content {
-        margin: auto; display: block; width: 80%; max-width: 700px; border-radius: 10px;
-    }
-    .close {
-        position: absolute; top: 15px; right: 35px; color: #f1f1f1;
-        font-size: 40px; font-weight: bold; cursor: pointer;
-    }
-</style>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
 </head>
-<body>
 
-<div class="container">
-    <div class="header">
-        <h2>Welcome <?php echo $_SESSION['user']; ?></h2>
-        <a href="logout.php">Logout</a>
+<body class="bg-light">
+
+<div class="container py-4">
+
+<!-- HEADER -->
+<div class="card mb-3 text-center shadow-sm">
+    <div class="card-body">
+        <h4>Welcome <?php echo $_SESSION['user']; ?></h4>
+        <a href="logout.php" class="btn btn-danger btn-sm">Logout</a>
     </div>
-    
-      
-    <div class="upload-box">
-          <div> 
-            <form method="post">
-     ID:
-    <input type="number" name="num"> <br> <br>
-        Name:
-    <input type="text" name="name"> <br>
-            </form>
-        </div>
-    
-        <h3>Upload Image</h3>
-        <?php if(isset($msg)) echo "<p class='msg'>$msg</p>"; ?>
-        <?php if(isset($error)) echo "<p class='error'>$error</p>"; ?>
+</div>
+
+<!-- UPLOAD BOX -->
+<div class="card mb-4 shadow-sm">
+
+    <div class="card-header bg-primary text-white text-center">
+        <h5>Upload Image</h5>
+    </div>
+
+    <div class="card-body text-center">
+
+        <?php if(isset($msg)) echo "<div class='alert alert-success'>$msg</div>"; ?>
+        <?php if(isset($error)) echo "<div class='alert alert-danger'>$error</div>"; ?>
+
         <form method="post" enctype="multipart/form-data">
-            <input type="file" name="file" required>
-            <br><br>
-            <button name="upload">Upload</button>
+
+            <input type="file" name="file" class="form-control mb-3" required>
+
+            <button name="upload" class="btn btn-primary w-100">
+                Upload
+            </button>
+
         </form>
+
     </div>
 
-    <h2 style="color:white;text-align:center;">📸 Uploaded Files List</h2>
+</div>
 
-    <table>
-        <thead>
-            <tr>
-                <th>SL No</th>
-                <th>File Name</th>
-                <th>Preview (Click to view)</th>
-                <th>Action</th>
-            </tr>
-        </thead>
-        <tbody>
+<!-- TABLE -->
+<div class="card shadow-sm">
+
+    <div class="card-header bg-dark text-white text-center">
+        <h5>Uploaded Files</h5>
+    </div>
+
+    <div class="card-body p-0">
+
+        <table class="table table-bordered table-striped text-center mb-0">
+
+            <thead class="table-primary">
+                <tr>
+                    <th>SL</th>
+                    <th>File Name</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
             <?php
             $folder = "uploads/";
             if(!is_dir($folder)) mkdir($folder);
+
             $files = array_diff(scandir($folder), array('.', '..'));
             $sl = 1;
 
             if(count($files) > 0){
                 foreach($files as $file){
                     echo "<tr>";
-                    echo "<td>" . $sl++ . "</td>";
-                    echo "<td>" . $file . "</td>";
-                    // এখানে onclick ইভেন্ট যোগ করা হয়েছে
-                    echo "<td><img src='uploads/$file' class='img-preview' onclick='openModal(this.src)'></td>";
-                    echo "<td><a class='del' href='?delete=$file' onclick=\"return confirm('Are you sure?')\">Delete</a></td>";
+                    echo "<td>$sl</td>";
+                    echo "<td>$file</td>";
+                    echo "<td><img src='uploads/$file' width='80' class='rounded border'></td>";
                     echo "</tr>";
+                    $sl++;
                 }
             } else {
-                echo "<tr><td colspan='4'>No files found!</td></tr>";
+                echo "<tr><td colspan='3'>No files found!</td></tr>";
             }
             ?>
-        </tbody>
-    </table>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 </div>
 
-<!-- Fullscreen View Modal -->
-<div id="myModal">
-    <span class="close" onclick="closeModal()">&times;</span>
-    <img class="modal-content" id="imgFull">
 </div>
-
-<script>
-    function openModal(src) {
-        document.getElementById("myModal").style.display = "block";
-        document.getElementById("imgFull").src = src;
-    }
-
-    function closeModal() {
-        document.getElementById("myModal").style.display = "none";
-    }
-
-    // উইন্ডোর বাইরে ক্লিক করলে যেন বন্ধ হয়
-    window.onclick = function(event) {
-        let modal = document.getElementById("myModal");
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
 
 </body>
 </html>
